@@ -69,7 +69,7 @@ function getWeather(location) {
             //populate daily data
             var daily = data.daily;
             //loop through daily data
-            for (var i = 0; i < daily.length; i++) {
+            for (var i = 0; i < 5; i++) {
                 //render the daily cards
                 var dailyWeather = daily[i];
                 var dailyTemp = daily[i].temp.day;
@@ -100,29 +100,54 @@ function getWeather(location) {
                 //     dailyYear:dailyWeather.dt.getFullYear(),
                 //     dailyDateString:dailyDay + '/' + dailyMonth + '/' + dailyYear
                 //render a card
-                renderDailyCard(city, dailyTemp, dailyIcon, dailyDescription, dailyDateString);
+                renderDailyCard(city, dailyTemp, dailyIcon, dailyDescription, dailyDateString,i);
             }
         })
 
 }
 
 
-function renderDailyCard(city, dailyTemp, dailyIcon, dailyDescription, dailyDateString) {
+function renderDailyCard(city, dailyTemp, dailyIcon, dailyDescription, dailyDateString, idx) {
     //BUILD THE HTML
+
+                // <div class="card col-15 col-md-3 col-lg-2 bg-dark weather-card" style="height: 18rem;">
+                // <img src="..." class="card-img-top" alt="...">
+                // <div class="card-body">
+                //   <h5 class="card-title">Day 1</h5>
+                //   <p class="card-text">Weather info goes here</p>
+                // </div>
+
     var dailyCard = document.createElement('div');
-    dailyCard.setAttribute('class', 'card');
     var img = document.createElement('img');
-    img.setAttribute('src', dailyIcon);
-    img.setAttribute('class', 'card-img-top');
-
     var dailyCardBody = document.createElement('div');
+    var dailyCardTitle = document.createElement('h5');
+    var dailyCardText = document.createElement('p');
+    //img.setAttribute('src', dailyIcon);
+    img.setAttribute('class', 'card-img-top');
+    
+    dailyCard.setAttribute('class', 'card col-15 col-md-3 col-lg-2 bg-dark weather-card');
+    dailyCard.setAttribute('id', 'dailyCard' + idx);
     dailyCardBody.setAttribute('class', 'card-body');
-    var cardTitle = document.createElement('h5');
-    cardTitle.setAttribute('class', 'card-title');
-    cardTitle.textContent = city;
+    dailyCardTitle.setAttribute('class', 'card-title');
+    dailyCardTitle.textContent="Day " + (idx+1); //date will go here
+    dailyCardText.setAttribute('class', 'card-text');
+    dailyCardText.textContent="Weather info goes here";
+    //dailyCardTitle.textContent = city;
 
-    dailyCard.classList.add('daily-card');
+    //dailyCard.classList.add('daily-card');
     forecastContainer.appendChild(dailyCard);
+    dailyCard.appendChild(img);
+    dailyCard.appendChild(dailyCardBody);
+    dailyCard.appendChild(dailyCardTitle);
+    dailyCard.appendChild(dailyCardText);
+    //dailyCard.appendChild(cardTitle);
+
+    //forecastContainer.appendChild(img);
+    //forecastContainer.appendChild(dailyCardBody);
+
+
+
+    // <div class="card col-15 col-md-3 col-lg-2 bg-dark weather-card daily-card" id="dailyCard0"></div>
 }
 
 
