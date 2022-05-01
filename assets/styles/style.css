@@ -8,3 +8,31 @@
     border-width: 1px 0;
     box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
   }
+
+  .application-header {
+    background: #20084a;
+   
+    background: linear-gradient(to left, #e7be06, #0849c2);
+  }
+  .weather-card{
+    background: #20084a;
+   
+    background: linear-gradient(to left, #067ae7d0, #87d3f1);
+  }
+  .weather-today{
+    background: #dcecfc;
+    background: linear-gradient(to left, #f1f5f5d0, #cee1f5);
+    color: black;
+  }
+  
+  .weather-card-sunny{
+    background: #20084a;
+   
+    background: linear-gradient(to left, #067ae7d0, #87d3f1);
+  }
+  .weather-card-rainy{
+    background: #20084a;
+   
+    background: linear-gradient(to left, #484949d0, #c2c3c4);
+  }
+
