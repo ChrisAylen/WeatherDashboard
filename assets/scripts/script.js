@@ -2,13 +2,14 @@
 
 var weatherApiUrl = 'https://api.openweathermap.org';
 var api_Key = 'cfd8ddb77cee9609e1f3befbf11545a3';
-//var iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
-var cityName = 'London';
-var countryCode = 'uk';
+
+var cityName = 'Hong Kong';
+//var countryCode = 'uk';
 var limit = 5;
 var forecastContainer = document.querySelector('#forecast');
 var searchForm = document.querySelector('#search-form');
-
+var cardTitle = document.querySelector('.card-title');
+var cardText = document.querySelector('.card-text');
 cityname=searchForm.textContent;
 getLatsAndLongs(cityName);
 
@@ -36,7 +37,7 @@ function getWeather(location) {
     var long = location.lon;
     var city = location.city;
     var url = weatherApiUrl + "/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&exclude=minutely,hourly&appid=" + api_Key;
-
+    
     fetch(url)
         .then(function (response) {
             return response.json();
@@ -49,7 +50,7 @@ function getWeather(location) {
             var temp_max = data.current.temp_max;
             var humidity = data.current.humidity;
             var wind = data.current.wind_speed;
-            var icon = data.current.weather.icon;
+            var icon = data.current.weather[0].icon;
 
             var city = data.current.name;
 
@@ -63,6 +64,21 @@ function getWeather(location) {
             var dateString = day + '/' + month + '/' + year;
 
             //render a card
+            cardTitle.textContent=dateString;
+            cardText.textContent = description + " " + temp + "°C";
+            cardText.textContent += " " + humidity + "%";
+            cardText.textContent += " " + wind + "km/h";
+
+            
+            var iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
+            //var img = document.createElement('img');
+            document.getElementById("iconImg").src = iconUrl;
+
+
+
+            
+            //cardText.textContent += " " + temp_min + "°C";
+
 
             // var timezoneString = timezone / 3600;
             // var timezoneString = timezoneString.toFixed(2);
@@ -83,7 +99,7 @@ function getWeather(location) {
                 var dailyYear = dailyDate.getFullYear();
                 var dailyDateString = dailyDay + '/' + dailyMonth + '/' + dailyYear;
                 var dailyCity=daily[i].weather.city;
-
+                var dailyIconUrl = "http://openweathermap.org/img/w/" + dailyIcon + ".png";
                 // var dailyIcon = dailyWeather.weather[0].icon;
                 // var dailyDescription = dailyWeather.weather[0].description;
                 // var dailyDate = new Date(dailyWeather.dt * 1000);
@@ -103,7 +119,7 @@ function getWeather(location) {
                 //     dailyYear:dailyWeather.dt.getFullYear(),
                 //     dailyDateString:dailyDay + '/' + dailyMonth + '/' + dailyYear
                 //render a card
-                renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dailyDateString,i);
+                renderDailyCard(dailyCity, dailyTemp, dailyIconUrl, dailyDescription, dailyDateString,i);
             }
         })
 
@@ -126,7 +142,8 @@ function renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dail
     var dailyCardTitle = document.createElement('h5');
     var dailyCardText = document.createElement('p');
     //img.setAttribute('src', dailyIcon);
-    img.setAttribute('class', 'card-img-top');
+    img.setAttribute('class', 'card-img-top weather-daily');
+    img.setAttribute('src', dailyIcon);
     
     dailyCard.setAttribute('class', 'card col-15 col-md-3 col-lg-2 bg-dark weather-card');
     dailyCard.setAttribute('id', 'dailyCard' + idx);
@@ -134,7 +151,7 @@ function renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dail
     dailyCardTitle.setAttribute('class', 'card-title');
     dailyCardTitle.textContent= cityName + " " + dailyDateString//(idx+1); //date will go here
     dailyCardText.setAttribute('class', 'card-text');
-    dailyCardText.textContent = dailyIcon + " " + dailyDescription + " " + dailyTemp + "°C";
+    dailyCardText.textContent = dailyDescription + " " + dailyTemp + "°C";
     //dailyCardText.textContent += dailyDescription//"Weather info goes here";
     //dailyCardText.textContent += " " + dailyTemp + "°C";
     //dailyCardTitle.textContent = city;

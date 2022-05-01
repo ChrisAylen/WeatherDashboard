@@ -16,6 +16,7 @@
   }
   .weather-card{
     background: #20084a;
+    width:5%;
    
     background: linear-gradient(to left, #067ae7d0, #87d3f1);
   }
@@ -23,6 +24,10 @@
     background: #dcecfc;
     background: linear-gradient(to left, #f1f5f5d0, #cee1f5);
     color: black;
+  }
+  .weather-daily{
+    
+    width:50%;
   }
   
   .weather-card-sunny{
