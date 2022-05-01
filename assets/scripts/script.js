@@ -7,7 +7,9 @@ var cityName = 'London';
 var countryCode = 'uk';
 var limit = 5;
 var forecastContainer = document.querySelector('#forecast');
+var searchForm = document.querySelector('#search-form');
 
+cityname=searchForm.textContent;
 getLatsAndLongs(cityName);
 
 
@@ -80,6 +82,7 @@ function getWeather(location) {
                 var dailyMonth = dailyDate.getMonth() + 1;
                 var dailyYear = dailyDate.getFullYear();
                 var dailyDateString = dailyDay + '/' + dailyMonth + '/' + dailyYear;
+                var dailyCity=daily[i].weather.city;
 
                 // var dailyIcon = dailyWeather.weather[0].icon;
                 // var dailyDescription = dailyWeather.weather[0].description;
@@ -100,14 +103,14 @@ function getWeather(location) {
                 //     dailyYear:dailyWeather.dt.getFullYear(),
                 //     dailyDateString:dailyDay + '/' + dailyMonth + '/' + dailyYear
                 //render a card
-                renderDailyCard(city, dailyTemp, dailyIcon, dailyDescription, dailyDateString,i);
+                renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dailyDateString,i);
             }
         })
 
 }
 
 
-function renderDailyCard(city, dailyTemp, dailyIcon, dailyDescription, dailyDateString, idx) {
+function renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dailyDateString, idx) {
     //BUILD THE HTML
 
                 // <div class="card col-15 col-md-3 col-lg-2 bg-dark weather-card" style="height: 18rem;">
@@ -129,9 +132,11 @@ function renderDailyCard(city, dailyTemp, dailyIcon, dailyDescription, dailyDate
     dailyCard.setAttribute('id', 'dailyCard' + idx);
     dailyCardBody.setAttribute('class', 'card-body');
     dailyCardTitle.setAttribute('class', 'card-title');
-    dailyCardTitle.textContent="Day " + (idx+1); //date will go here
+    dailyCardTitle.textContent= cityName + " " + dailyDateString//(idx+1); //date will go here
     dailyCardText.setAttribute('class', 'card-text');
-    dailyCardText.textContent="Weather info goes here";
+    dailyCardText.textContent = dailyIcon + " " + dailyDescription + " " + dailyTemp + "°C";
+    //dailyCardText.textContent += dailyDescription//"Weather info goes here";
+    //dailyCardText.textContent += " " + dailyTemp + "°C";
     //dailyCardTitle.textContent = city;
 
     //dailyCard.classList.add('daily-card');
