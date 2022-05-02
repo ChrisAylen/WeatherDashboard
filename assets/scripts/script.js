@@ -58,7 +58,7 @@ function populateSearchHistory() {
     //         </li>
 
     var history = JSON.parse(localStorage.getItem('searchHistory'));
-    searchHistoryList.innerHTML="";
+    searchHistoryList.innerHTML = "";
     if (history) {
         history.forEach(function (city) {
             var li = document.createElement('li');
@@ -109,23 +109,41 @@ function getWeather(location) {
             var dateString = day + '/' + month + '/' + year;
 
             //render a card
-            var todayDate = document.createElement('h3');
-            var todayTemp = document.createElement('h3');
+
+                // <img id="iconImg" src="http://openweathermap.org/img/wn/10d@2x.png" class="card-img-top weather-card" alt="...">
+                // <h5 class="card-title"></h5>
+                // <p class="card-text"></p>
+
+            var img=document.createElement('img');
+            img.setAttribute('id','iconImg');
+            img.setAttribute('src', "");
+            img.setAttribute('class', 'card-img-top weather-card');
+            img.setAttribute('alt', '...');
+            var cardTitle = document.createElement('h5');
+            cardTitle.setAttribute('class', 'card-title');
+            var cardText = document.createElement('p');
+
+            var todayCity = document.createElement('h3');
+            var todayDate = document.createElement('h5');
+            var todayTemp = document.createElement('h5');
+            var todayCombined = document.createElement('h5');
             var todayDescription = document.createElement('p');
             var todayHumidity = document.createElement('p');
             var todayWind = document.createElement('p');
             var todayUv = document.createElement('p');
             var todayUvButton = document.createElement('button');
-            cardText.innerHTML="";
+            cardText.innerHTML = "";
             if (uv < 3) {
                 todayUvButton.classList.add('btn-green');
-              } else if (uv < 7) {
+            } else if (uv < 7) {
                 todayUvButton.classList.add('btn-amber');
-              } else {
+            } else {
                 todayUvButton.classList.add('btn-red');
-              }
+            }
 
-            todayDate.textContent = dateString;
+            todayCity.textContent = cityName + "- Current Weather";
+
+            todayDate.textContent = "Date: " +dateString;
             todayTemp.textContent = 'Temperature: ' + temp + '°C';
             todayDescription.textContent = 'Description: ' + description;
             todayHumidity.textContent = 'Humidity: ' + humidity + '%';
@@ -133,13 +151,18 @@ function getWeather(location) {
             todayUv.textContent = 'UV Index: ' + uv;
             todayUvButton.textContent = 'UV Index: ' + uv;
 
-
+            currentWeather.appendChild(img);
+            currentWeather.appendChild(cardTitle);
+            currentWeather.appendChild(cardText);
+            currentWeather.appendChild(todayCity);
             currentWeather.appendChild(todayDate);
             currentWeather.appendChild(todayTemp);
+            currentWeather.appendChild(todayCombined);
+            
             //currentWeather.appendChild(todayWind);
             //currentWeather.appendChild(todayHumidity);
             //currentWeather.appendChild(todayDescription);
-            cardText.textContent+=description + ", Humidity: " + humidity + "%,  Wind: " + wind + "km/h";
+            todayCombined.textContent += description + ", Humidity: " + humidity + "%,  Wind: " + wind + "km/h";
             currentWeather.appendChild(todayUvButton);
             // cardTitle.textContent = dateString;
             // cardText.textContent = description + " " + temp + "°C";
@@ -171,6 +194,8 @@ function getWeather(location) {
                 //render the daily cards
                 var dailyWeather = daily[i];
                 var dailyTemp = daily[i].temp.day;
+                var dailyWind = daily[i].wind_speed;
+                var dailyHumidity = daily[i].humidity;
                 var dailyIcon = daily[i].weather[0].icon;
                 var dailyDescription = daily[i].weather[0].description;
                 var dailyDate = new Date(dailyWeather.dt * 1000);
@@ -183,7 +208,7 @@ function getWeather(location) {
 
                 //render a card
 
-                renderDailyCard(dailyCity, dailyTemp, dailyIconUrl, dailyDescription, dailyDateString, i);
+                renderDailyCard(dailyCity, dailyTemp, dailyWind, dailyHumidity, dailyIconUrl, dailyDescription, dailyDateString, i);
             }
         })
 
@@ -191,13 +216,13 @@ function getWeather(location) {
 
 function toTitleCase(str) {
     return str.replace(
-      /\w\S*/g,
-      function(txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-      }
+        /\w\S*/g,
+        function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
     );
-  }
-function renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dailyDateString, idx) {
+}
+function renderDailyCard(dailyCity, dailyTemp, dailyWind, dailyHumidity, dailyIcon, dailyDescription, dailyDateString, idx) {
     //BUILD THE HTML
 
 
@@ -206,8 +231,11 @@ function renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dail
     var dailyCardBody = document.createElement('div');
     var dailyCardTitle = document.createElement('h5');
     var dailyCardText = document.createElement('p');
+    var dailyCardWind = document.createElement('p');
+    var dailyCardHumidity = document.createElement('p');
+
     var dailyCardDescription = document.createElement('p');
-    var dailyCardTemp= document.createElement('p');
+    var dailyCardTemp = document.createElement('p');
     img.setAttribute('class', 'card-img-top weather-daily');
     img.setAttribute('src', dailyIcon);
     dailyCard.setAttribute('class', 'card col-15 col-md-3 col-lg-2 bg-dark weather-card');
@@ -219,19 +247,24 @@ function renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dail
     dailyCardTitle.textContent = cityName + " " + dailyDateString//(idx+1); //date will go here
     dailyCardText.setAttribute('class', 'card-text');
     dailyCardText.textContent = dailyTemp + "°C";
+    dailyCardHumidity.textContent += "Humidity: " + dailyHumidity + "%";
+    dailyCardWind.textContent += "Wind: " + dailyWind + "km/h";
 
 
-    
+
     forecastContainer.appendChild(dailyCard);
     dailyCard.appendChild(img);
     dailyCard.appendChild(dailyCardBody);
     dailyCard.appendChild(dailyCardTitle);
     dailyCard.appendChild(dailyCardText);
+    dailyCard.appendChild(dailyCardWind);
+    dailyCard.appendChild(dailyCardHumidity);
 }
 
 function processHistoryClick(event) {
     var button = event.target;
     cityName = button.textContent;
+    currentWeather.innerHTML = "";
     getLatsAndLongs(cityName);
 }
 
@@ -239,8 +272,9 @@ function processHistoryClick(event) {
 
 searchButton.addEventListener('click', function (event) {
     event.preventDefault();
-    cityName = searchInput.value;
+    cityName = toTitleCase(searchInput.value);
     console.log(`The search was for: ${cityName}`);
+    currentWeather.innerHTML = "";
     getLatsAndLongs(cityName);
 });
 searchHistoryList.addEventListener('click', processHistoryClick)
