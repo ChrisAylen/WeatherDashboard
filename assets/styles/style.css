@@ -40,4 +40,17 @@
    
     background: linear-gradient(to left, #484949d0, #c2c3c4);
   }
+  .btn-green{
+background-color: green;
+color: white;
+  }
+  .btn-amber{
+    background-color: #ffc107;
+    color: black;
+
+  }
+  .btn-red{
+    background-color: red;
+    color: white;
+  }
 
