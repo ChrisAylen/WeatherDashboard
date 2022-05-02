@@ -4,12 +4,11 @@ var weatherApiUrl = 'https://api.openweathermap.org';
 var api_Key = 'cfd8ddb77cee9609e1f3befbf11545a3';
 
 var cityName = '';
-//var countryCode = 'uk';
+
 var limit = 5;
 var forecastContainer = document.querySelector('#forecast');
 var searchForm = document.querySelector('#search-form');
 var searchButton = document.getElementById('search-button');
-//var searchButton=document.querySelector('#search-button');
 var cardTitle = document.querySelector('.card-title');
 var cardText = document.querySelector('.card-text');
 var searchInput = document.querySelector('#search-input');
@@ -17,11 +16,10 @@ var searchHistoryList = document.querySelector('#search-history');
 var currentWeather = document.getElementById('current-weather');
 cityname = searchForm.textContent;
 var searchHistory = [];
-//getLatsAndLongs(cityName);
+
 populateSearchHistory()
 
 function getLatsAndLongs(cityName) {
-    //var url2=weatherApiUrl + "/geo/1.0/direct?q=" + cityName +","+stateCode+"," +countryCode + "&limit=" +limit +"&appid="+ API_key;
     addSearchTermToHistory(cityName);
     var url = weatherApiUrl + "/geo/1.0/direct?q=" + cityName + "&limit=" + limit + "&appid=" + api_Key;
     fetch(url)
@@ -33,7 +31,7 @@ function getLatsAndLongs(cityName) {
                 alert("City not found");
             }
             //append the search to history
-            //fetch the weather for the firstr city
+            //fetch the weather for the first city
             getWeather(data[0]);
 
         })
@@ -52,10 +50,6 @@ function addSearchTermToHistory(cityName) {
 }
 
 function populateSearchHistory() {
-
-    // <li class="my-2">
-    //           <button type="submit" class="btn btn-primary" id="history-button" aria-label="submit search">History Item 1</button>
-    //         </li>
 
     var history = JSON.parse(localStorage.getItem('searchHistory'));
     searchHistoryList.innerHTML = "";
@@ -110,10 +104,6 @@ function getWeather(location) {
 
             //render a card
 
-                // <img id="iconImg" src="http://openweathermap.org/img/wn/10d@2x.png" class="card-img-top weather-card" alt="...">
-                // <h5 class="card-title"></h5>
-                // <p class="card-text"></p>
-
             var img=document.createElement('img');
             img.setAttribute('id','iconImg');
             img.setAttribute('src', "");
@@ -158,37 +148,20 @@ function getWeather(location) {
             currentWeather.appendChild(todayDate);
             currentWeather.appendChild(todayTemp);
             currentWeather.appendChild(todayCombined);
-            
-            //currentWeather.appendChild(todayWind);
-            //currentWeather.appendChild(todayHumidity);
-            //currentWeather.appendChild(todayDescription);
+
             todayCombined.textContent += description + ", Humidity: " + humidity + "%,  Wind: " + wind + "km/h";
             currentWeather.appendChild(todayUvButton);
-            // cardTitle.textContent = dateString;
-            // cardText.textContent = description + " " + temp + "°C";
-            // cardText.textContent += " " + humidity + "%";
-            // cardText.textContent += " " + wind + "km/h";
-            // cardText.textContent += " " + uv + "UV Index";
+
 
 
 
             var iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
-            //var img = document.createElement('img');
+
             document.getElementById("iconImg").src = iconUrl;
-
-
-
-
-            //cardText.textContent += " " + temp_min + "°C";
-
-
-            // var timezoneString = timezone / 3600;
-            // var timezoneString = timezoneString.toFixed(2);
-            // var timezoneString = timezoneString + ' hours';
 
             //populate daily data
             var daily = data.daily;
-            //loop through daily data
+
 
             for (var i = 1; i < 6; i++) {
                 //render the daily cards

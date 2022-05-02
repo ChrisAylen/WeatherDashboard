@@ -16,7 +16,7 @@
   }
   .weather-card{
     background: #20084a;
-    width:5%;
+    width:50px;
    
     background: linear-gradient(to left, #067ae7d0, #87d3f1);
   }
