@@ -42,6 +42,6 @@ The following image shows the web application's appearance and functionality:
 
 # ToDo
 
-The application could benefit from better responsive behaviour, particularly the 5 day cards
+The application could benefit from better responsive behaviour, particularly the 5 day cards and the search history.
 
 
