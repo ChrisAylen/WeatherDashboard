@@ -3,15 +3,18 @@
 var weatherApiUrl = 'https://api.openweathermap.org';
 var api_Key = 'cfd8ddb77cee9609e1f3befbf11545a3';
 
-var cityName = 'Hong Kong';
+var cityName = '';
 //var countryCode = 'uk';
 var limit = 5;
 var forecastContainer = document.querySelector('#forecast');
 var searchForm = document.querySelector('#search-form');
+var searchButton=document.getElementById('search-button');
+//var searchButton=document.querySelector('#search-button');
 var cardTitle = document.querySelector('.card-title');
 var cardText = document.querySelector('.card-text');
+var searchInput=document.querySelector('#search-input');
 cityname=searchForm.textContent;
-getLatsAndLongs(cityName);
+//getLatsAndLongs(cityName);
 
 
 function getLatsAndLongs(cityName) {
@@ -37,7 +40,7 @@ function getWeather(location) {
     var long = location.lon;
     var city = location.city;
     var url = weatherApiUrl + "/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=metric&exclude=minutely,hourly&appid=" + api_Key;
-    
+    forecastContainer.innerHTML = "";
     fetch(url)
         .then(function (response) {
             return response.json();
@@ -87,6 +90,7 @@ function getWeather(location) {
             //populate daily data
             var daily = data.daily;
             //loop through daily data
+            
             for (var i = 0; i < 5; i++) {
                 //render the daily cards
                 var dailyWeather = daily[i];
@@ -119,6 +123,7 @@ function getWeather(location) {
                 //     dailyYear:dailyWeather.dt.getFullYear(),
                 //     dailyDateString:dailyDay + '/' + dailyMonth + '/' + dailyYear
                 //render a card
+                
                 renderDailyCard(dailyCity, dailyTemp, dailyIconUrl, dailyDescription, dailyDateString,i);
             }
         })
@@ -135,7 +140,7 @@ function renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dail
                 //   <h5 class="card-title">Day 1</h5>
                 //   <p class="card-text">Weather info goes here</p>
                 // </div>
-
+    
     var dailyCard = document.createElement('div');
     var img = document.createElement('img');
     var dailyCardBody = document.createElement('div');
@@ -170,8 +175,16 @@ function renderDailyCard(dailyCity, dailyTemp, dailyIcon, dailyDescription, dail
 
 
     // <div class="card col-15 col-md-3 col-lg-2 bg-dark weather-card daily-card" id="dailyCard0"></div>
+
+    //event listner search button
 }
 
+searchButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    cityName = searchInput.value;
+    console.log(`The search was for: ${cityName}`);
+    getLatsAndLongs(cityName);
+});
 
 
 
