@@ -40,6 +40,8 @@ The following image shows the web application's appearance and functionality:
 
 ![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for Southampton.](/assets/images/interface.PNG)
 
+Live Deployment: https://chrisaylen.github.io/WeatherDashboard/
+
 # ToDo
 
 The application could benefit from better responsive behaviour, particularly the 5 day cards and the search history.
